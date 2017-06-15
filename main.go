@@ -224,74 +224,6 @@ func sanitizePath(dirPath string) string {
 var confPath, baseDirPath, logPath, rulesFile, shapeFile, csvSep, confOut string
 
 func main() {
-	//	dep := "95"
-	//	confPath := "/media/imran/Data_2/scripts/confShapesAndRules.json"
-	//	baseDir := "/media/imran/Data_2/smallSample/"
-	//	baseDir = "/media/imran/Data_2/klodo/" + dep + "/COGIT28112016/dep" + dep + "/"
-	//	logdir := "/home/imran/"
-	//	//logfile := "logstats_" + dep + ".log"
-	//	//errfile := "logerrs_" + dep + ".log"
-
-	//	var conf cfg.ConfJson
-	//	var stats []string
-	//	var errs []string
-	//	var idpar_dir []string
-
-	//	/* Loading JSON conf file */
-	//	err := conf.LoadFile(confPath)
-	//	if err != nil {
-	//		fmt.Println("error reading conf file " + err.Error())
-	//		panic(err)
-	//	}
-
-	//	/* DB object to query the rules*/
-	//	db, err := conf.GetDb() //sql.Open("postgres", dbCreds)
-	//	if err != nil {
-	//		panic(err)
-	//	}
-	//	defer db.Close()
-
-	//	/* Loading subdirectories from base path*/
-	//	subdirs, err := ioutil.ReadDir(baseDir)
-	//	nbDirs := len(subdirs)
-	//	if err != nil {
-	//		panic(err)
-	//	}
-
-	//	/* Launching the process for all subdirs */
-	//	fmt.Println("Beginning processing for ", nbDirs, " directories")
-	//	start := time.Now()
-	//	for c, d := range subdirs {
-	//		process(baseDir+d.Name()+"/", &conf, db, &stats, &errs)
-	//		//createCsvForIdparAndDir(baseDir+d.Name()+"/", &conf, &idpar_dir)
-	//		//processCsv(baseDir+d.Name()+"/", &conf, &stats, &errs)
-	//		if c > 0 && c%350 == 0 {
-	//			fmt.Println("iter ", c, " - log: ", len(stats), ":", " - errs: ", len(errs), "after ", time.Now().Sub(start).Minutes(), "minutes")
-	//		}
-	//	}
-	//	end := time.Now()
-
-	//	fmt.Println("Time passed before writing logs (mn) ", (end.Sub(start).Minutes()))
-	//	fmt.Println("log size: ", len(stats))
-	//	fmt.Println("errs size: ", len(errs))
-	//	//	err = writelog(logdir+logfile, stats)
-	//	//	if err != nil {
-	//	//		fmt.Println("error writing logfile ", logdir+logfile)
-	//	//	}
-	//	//	fmt.Println("log file written in ", logdir+logfile)
-	//	//	err = writelog(logdir+errfile, errs)
-	//	//	if err != nil {
-	//	//		fmt.Println("error writing logfile ", logdir+errfile)
-	//	//	}
-	//	//	fmt.Println("log file written in ", logdir+errfile)
-	//	err = writelog(logdir+"idpars_dir_"+dep+".csv", idpar_dir)
-	//	if err != nil {
-	//		fmt.Println("error writing logfile ", logdir+"idpars_dir")
-	//	}
-	//	fmt.Println("csv file written in ", logdir+"idpars_dir_"+dep+".csv")
-
-	//	//cfg.CreateStub(baseDir+"77007018/parcelle.shp", "/media/imran/Data_2/scripts/regles_plu.csv", ";", "polo.json")
-
 	/************** beginning cli parser **************/
 	app := cli.NewApp()
 	app.EnableBashCompletion = true
@@ -354,7 +286,7 @@ func main() {
 		},
 	}
 	app.Name = "shapeRuler"
-	app.Version = "0.70"
+	app.Version = "0.72"
 	app.Usage = "Tool to add rules in shapefiles, for running a simplu3D simulation"
 	app.Run(os.Args)
 

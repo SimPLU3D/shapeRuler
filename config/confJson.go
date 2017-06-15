@@ -41,6 +41,8 @@ type ConfJson struct {
 	} `json:"shapeOut"`
 }
 
+// create a []shp.Field corresponding to the fields to write
+// in the output shapefile, with correct type and name as configured in the json conf file
 func (c *ConfJson) CreateShapeFields() []shp.Field {
 	var fields []shp.Field
 	for _, data := range c.ShapeOut.Fields {
@@ -76,23 +78,6 @@ type DBcreds struct {
 	Path     string `json:"path"`
 	Type     string `json:"type"`
 	User     string `json:"user"`
-}
-
-func (c *ConfJson) GetDbURI() (string, error) {
-	var creds DBcreds
-	f, err := ioutil.ReadFile(c.Rules.Access)
-	if err != nil {
-		fmt.Println("error reading db credentials file")
-		return "", err
-	}
-	err = json.Unmarshal(f, &creds)
-	if err != nil {
-		fmt.Println("error unmarshalling db creds file")
-		return "", err
-	}
-	//"postgres://imrandb:imrandb@localhost/iudf"
-	uri := creds.Type + "://" + creds.User + ":" + creds.Password + "@" + creds.Path + "/" + creds.DbName
-	return uri, nil
 }
 
 func (c *ConfJson) GetDb() (*sql.DB, error) {
@@ -131,7 +116,7 @@ func getShpHeaders(fileName string) []string {
 	}
 	defer shape.Close()
 	var fields []string
-	for _, f := range shape.Fields() { //f is [11]byte whe need to make it a stringf.Name
+	for _, f := range shape.Fields() { //f is [11]byte whe need to make it a string
 		sb := f.Name[:]
 		n := bytes.IndexByte(sb, 0)
 		fields = append(fields, string(sb[:n]))

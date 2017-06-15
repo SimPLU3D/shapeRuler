@@ -1,17 +1,27 @@
 package shapeUtils
 
 import (
+	"shapeRuler/config"
 	"testing"
 )
 
 func TestReadInputParcel(t *testing.T) {
-	//parcelFile := "../resources/77006871/parcelle.shp"
-	//conf := "../resources/confShapesAndRules.json"
-	//ReadInputParcel(parcelFile, conf)
-	a := 1
-	b := 1
-	if a != b {
+	nbRows := 7
+	parcelFile := "../resources/77006871/parcelle.shp"
+	confFile := "../resources/confShapesAndRules.json"
+	var conf config.ConfJson
+	conf.LoadFile(confFile)
+	parcellData, err := ReadInputParcel(parcelFile, &conf)
+	if err != nil {
 		t.Fail()
+		t.Log(err.Error())
 	}
-	t.Log("a: ", a, " ; b: ", b)
+
+	//very basic
+	if len(parcellData) != nbRows {
+		t.Fail()
+		t.Log("numbers of rows loaded != number of rows in shapefile")
+	} else {
+		t.Log("Parcel shapefile coorectly loaded")
+	}
 }
