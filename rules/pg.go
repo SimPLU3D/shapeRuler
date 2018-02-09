@@ -12,7 +12,7 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func PgGetRulesFor(thisRow *shapeUtils.ShapeRow, c *cfg.ConfJson, db *sql.DB, dir string) (string, error) {
+func PgGetRulesFor(thisRow *shapeUtils.ShapeRow, c *cfg.ConfJson, db *sql.DB /*, dir string*/) (string, error) {
 	idpar := thisRow.Key
 	stmt := "SELECT * FROM regles_plu WHERE " + c.Rules.Key + " = $1 LIMIT 1"
 	rows, err := db.Query(stmt, idpar)

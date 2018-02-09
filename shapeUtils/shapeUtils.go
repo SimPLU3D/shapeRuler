@@ -10,8 +10,9 @@ import (
 	"github.com/jonas-p/go-shp"
 )
 
-/* basic structure to store a row for the output shape
- */
+/*
+basic structure to store a row for the output shape
+*/
 type ShapeRow struct {
 	Key    string
 	Values map[string]string
@@ -96,6 +97,9 @@ func WriteShape(baseDir string, c *cfg.ConfJson, shapeRows []ShapeRow) error {
 	return nil
 }
 
+/*
+ return a string containing thenon unique keys in the shape
+*/
 func DetectSimilarKeys(rows []ShapeRow) string {
 	var log string
 	if len(rows) <= 1 {

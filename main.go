@@ -44,7 +44,7 @@ func process(baseDir string, conf *cfg.ConfJson, db *sql.DB, logs *[]string, err
 	}
 	log = ""
 	for k, _ := range parcellData {
-		key, err := rules.PgGetRulesFor(&parcellData[k], conf, db, baseDir)
+		key, err := rules.PgGetRulesFor(&parcellData[k], conf, db /*, baseDir*/)
 		if err != nil {
 			*errors = append(*errors, parcelFile+" : Error getting rules "+err.Error())
 		}
@@ -93,7 +93,7 @@ func processCsv(baseDir string, conf *cfg.ConfJson, logs *[]string, errors *[]st
 		}
 		defer csvFile.Close()
 
-		key, err := rules.CsvGetRulesFor(&parcellData[k], conf, csvFile, baseDir)
+		key, err := rules.CsvGetRulesFor(&parcellData[k], conf, csvFile /*, baseDir*/)
 		if err != nil {
 			*errors = append(*errors, parcelFile+" : Error getting rules "+err.Error())
 		}
@@ -188,11 +188,13 @@ func execute(c *cli.Context) error {
 			processCsv(baseDirPath+d.Name()+"/", &conf, &stats, &errs)
 		}
 		if c > 0 && c%350 == 0 {
-			fmt.Println("iter ", c, " - log: ", len(stats), ":", " - errs: ", len(errs), "after ", time.Now().Sub(start).Minutes(), "minutes")
+			fmt.Print("iter ", c, " - log: ", len(stats), " - errs: ", len(errs), " after ")
+			fmt.Printf("%.4f minutes\n", time.Now().Sub(start).Minutes())
 		}
 	}
 	end := time.Now()
-	fmt.Println("Time passed before writing logs (mn) ", (end.Sub(start).Minutes()))
+	fmt.Print("Time passed before writing logs : ")
+	fmt.Printf("%.4f minutes\n", end.Sub(start).Minutes())
 	fmt.Println("log size: ", len(stats))
 	fmt.Println("errs size: ", len(errs))
 

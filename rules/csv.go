@@ -13,7 +13,7 @@ import (
 	"os"
 )
 
-func CsvGetRulesFor(thisRow *shapeUtils.ShapeRow, c *cfg.ConfJson, csvFile *os.File, dir string) (string, error) {
+func CsvGetRulesFor(thisRow *shapeUtils.ShapeRow, c *cfg.ConfJson, csvFile *os.File /*, dir string*/) (string, error) {
 	indexId := 0
 	log := ""
 	idpar := thisRow.Key
